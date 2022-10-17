@@ -1,11 +1,12 @@
 ﻿using Config;
 using DFramework;
 using Entity;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 namespace Mgr
 {
-    public class GameTimeMgr : Singleton<GameTimeMgr>
+    public class GameTimeMgr : MonoSingleton<GameTimeMgr>
     {
 
         /// <summary>
@@ -40,6 +41,12 @@ namespace Mgr
                 return;
             }
             EntityDic.Remove(uid);
+        }
+
+        public void FixedUpdate()
+        {
+            //TODO 看一下丢到update里操作会不会影响性能，如果会就开个协程
+            
         }
     }
 }

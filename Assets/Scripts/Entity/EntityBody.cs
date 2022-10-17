@@ -16,11 +16,6 @@ namespace Entity
             PointInTimes = new List<PointInTime>();
         }
 
-        private void FixedUpdate()
-        {
-            throw new NotImplementedException();
-        }
-
         private void OnDestroy()
         {
             GameTimeMgr.Instance.RemoveEntity(UID);
