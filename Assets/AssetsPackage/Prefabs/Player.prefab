@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4111230397814070408}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a63b1c84be41e084090c8f6103a468a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Rigidbody: {fileID: 0}
+  Collider: {fileID: 0}
   _jumpForce: 400
   _movementSmoothing: 0.05
   _airControl: 0
@@ -54,6 +56,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _groundCheck: {fileID: 0}
+  _anim: {fileID: 0}
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []

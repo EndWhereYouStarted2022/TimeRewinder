@@ -9,7 +9,7 @@ public class PlayerController : EntityBody
 	[SerializeField] private bool _airControl = false;							// Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask _groundLayer;							// A mask determining what is ground to the character
 	[SerializeField] private Transform _groundCheck;							// A position marking where to check if the player is grounded.
-
+	[SerializeField] private Animator _anim;
 	const float _groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
 	private bool _grounded = true;            // Whether or not the player is grounded.
 	private Rigidbody2D _rb;
@@ -18,7 +18,8 @@ public class PlayerController : EntityBody
 
 	private Collider2D[] _groundColliders; // Cache Collider2D array used in Fixed Update to check for ground collision
 	private float _movement = 0;
-
+	private bool _jump = false;
+	
 	[Header("Events")]
 	[Space]
 
@@ -30,6 +31,7 @@ public class PlayerController : EntityBody
 	protected override void OnAwake()
 	{
 		_rb = GetComponent<Rigidbody2D>();
+		_anim = GetComponent<Animator>();
 		_groundColliders = new Collider2D[6];
 		if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
@@ -38,13 +40,13 @@ public class PlayerController : EntityBody
 	private void Update()
 	{
 		_movement = Input.GetAxisRaw("Horizontal");
-
+		_jump = Input.GetAxisRaw("Vertical") > 0;
 	}
 
 	protected override void OnFixedUpdate()
 	{
 		// UpdateGroundStatus();
-		Move(_movement, false);
+		Move(_movement, _jump);
 	}
 	
 	void UpdateGroundStatus()
@@ -62,6 +64,8 @@ public class PlayerController : EntityBody
 					OnLandEvent.Invoke();
 			}
 		}
+		//set animator parameter
+		_anim.SetBool("isGround",_grounded);
 	}
 	
 	public void Move(float move, bool jump)
@@ -71,7 +75,9 @@ public class PlayerController : EntityBody
 			Vector3 targetVelocity = new Vector2(move * 10f, _rb.velocity.y);
 			// And then smoothing it out and applying it to the character
 			_rb.velocity = Vector3.SmoothDamp(_rb.velocity, targetVelocity, ref _velocity, _movementSmoothing);
-
+			//play running animation 
+			_anim.SetBool("isRunning",Mathf.Abs(move) > 0);
+			
 			//Flip left or right
 			if (move > 0 && !_facingRight)
 				Flip();
@@ -85,6 +91,8 @@ public class PlayerController : EntityBody
 			// Add a vertical force to the player.
 			_grounded = false;
 			_rb.AddForce(new Vector2(0f, _jumpForce));
+			//play jumping animation 
+			_anim.SetTrigger("Jump");
 		}
 	}
 
