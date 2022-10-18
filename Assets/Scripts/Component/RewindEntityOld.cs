@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-namespace Entity
+namespace Rewind
 {
-    public class EntityBody : MonoBehaviour
+    public class RewindEntityOld : MonoBehaviour
     {
+        
         public Rigidbody2D Rigidbody;
         public Collider2D Collider;
         
@@ -37,21 +38,17 @@ namespace Entity
 
         private void Awake()
         {
-            //TODO 获得唯一的ID
-            UID = 1;
-            GameTimeMgr.Instance.AddEntity(UID, this);
+            UID = GameMgr.Instance.GetGameOnlyId();
+            RewindMgr.Instance.AddEntity(UID, this);
+            
             PointInTimes.Clear();
-
             Rigidbody ??=  transform.GetComponentInChildren<Rigidbody2D>();
             Collider ??= transform.GetComponentInChildren<Collider2D>();
-
-            OnAwake();
         }
 
         private void OnDestroy()
         {
-            BeforeDestroy();
-            GameTimeMgr.Instance.RemoveEntity(UID);
+            RewindMgr.Instance.RemoveEntity(UID);
             PointInTimes.Clear();
         }
 
@@ -66,7 +63,6 @@ namespace Entity
             {
                 Record();
             }
-            OnFixedUpdate();
         }
 
         private void OnRewindStart()
@@ -80,6 +76,7 @@ namespace Entity
                 Rigidbody.velocity = Vector2.zero;
                 Rigidbody.gravityScale = 0;
             }
+            BroadcastMessage("OnRewindStart");
         }
 
         private void OnRewindStop()
@@ -101,6 +98,7 @@ namespace Entity
                 Rigidbody.velocity = velocity;
                 Rigidbody.gravityScale = gravity;
             }
+            BroadcastMessage("OnRewindStop");
         }
         
         private void Rewind()
@@ -134,21 +132,6 @@ namespace Entity
                 point.GravityScale = Rigidbody.gravityScale;
             }
             PointInTimes.Insert(0, point);
-        }
-
-        protected virtual void OnAwake()
-        {
-            
-        }
-
-        protected virtual void BeforeDestroy()
-        {
-            
-        }
-
-        protected virtual void OnFixedUpdate()
-        {
-            
         }
     }
 }

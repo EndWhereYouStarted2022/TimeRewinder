@@ -4,24 +4,12 @@ using UnityEngine;
 
 namespace DFramework
 {
-    public class AudioManager : MonoSingleton<AudioManager>
+    public class AudioMgr : MonoSingleton<AudioMgr>
     {
         private AudioListener mAudioListener;
         private AudioSource mMusicSource;
 
-        // private static AudioManager mInstance;
-        // public static AudioManager Instance
-        // {
-        //     get
-        //     {
-        //         if (mInstance == null)
-        //         {
-        //             mInstance = new GameObject("AudioManager").AddComponent<AudioManager>();
-        //             DontDestroyOnLoad(mInstance);
-        //         }
-        //         return mInstance;
-        //     }
-        // }
+        private AudioMgr() { }
 
         public void CheckAudioListener()
         {

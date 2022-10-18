@@ -1,8 +1,7 @@
-using Entity;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerController : EntityBody
+public class PlayerController : MonoBehaviour
 {
 	[SerializeField] private float _jumpForce = 400f;							// Amount of force added when the player jumps.
 	[Range(0, .3f)] [SerializeField] private float _movementSmoothing = .05f;	// How much to smooth out the movement
@@ -28,7 +27,7 @@ public class PlayerController : EntityBody
 	[System.Serializable]
 	public class BoolEvent : UnityEvent<bool> { }
 
-	protected override void OnAwake()
+	protected void Awake()
 	{
 		_rb = GetComponent<Rigidbody2D>();
 		_anim = GetComponent<Animator>();
@@ -43,7 +42,7 @@ public class PlayerController : EntityBody
 		_jump = Input.GetAxisRaw("Vertical") > 0;
 	}
 
-	protected override void OnFixedUpdate()
+	protected void FixedUpdate()
 	{
 		// UpdateGroundStatus();
 		Move(_movement, _jump);

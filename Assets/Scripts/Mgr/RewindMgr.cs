@@ -1,37 +1,58 @@
 ﻿using Config;
 using DFramework;
-using Entity;
+using Rewind;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 namespace Mgr
 {
-    public class GameTimeMgr : MonoSingleton<GameTimeMgr>
+    public class RewindMgr : MonoSingleton<RewindMgr>
     {
+        #region Tag
+        /// <summary>
+        /// 是否在回放
+        /// </summary>
+        public bool IsRewind { private set; get; }
+        /// <summary>
+        /// 游戏是否正常在运行（是否正常记录）
+        /// </summary>
+        public bool IsRunning { private set; get; }
+        #endregion
+
+        #region Time
+        private float _startTime;
+        private float _endTime;
+        #endregion
+
+        #region Action
+        public Action<float> OnRewindTimeChange;
+        public Action OnRewindStart;
+        public Action OnRewindStop;
+        #endregion
 
         /// <summary>
         /// 存放所有实体角色的列表
         /// </summary>
-        private Dictionary<int, EntityBody> EntityDic;
+        private Dictionary<int, RewindEntityOld> EntityDic;
         private float TotalFrame;
 
-        private GameTimeMgr()
+        private RewindMgr()
         {
-            EntityDic = new Dictionary<int, EntityBody>();
+            EntityDic = new Dictionary<int, RewindEntityOld>();
             // TotalFrame = Mathf.Round(GameConfig.TotalGameTime / Time.fixedDeltaTime);
         }
 
-        public void Init()
+        public void EnterGame()
+        {
+            _startTime = Time.time;
+        }
+
+        public void ReleaseGame()
         {
             
         }
 
-        public void Release()
-        {
-            
-        }
-
-        public void AddEntity(int uid, EntityBody body)
+        public void AddEntity(int uid, RewindEntityOld body)
         {
             if (EntityDic.ContainsKey(uid))
             {
@@ -70,5 +91,27 @@ namespace Mgr
                 }
             }
         }
+
+        /// <summary>
+        /// 获得当前的游戏时间
+        /// </summary>
+        /// <returns></returns>
+        public float GetCurrentTime()
+        {
+            //TODO 回放后的时间调整
+            return Time.time - _startTime;
+        }
+
+        public void StartRewind()
+        {
+            
+        }
+
+        public void StopRewind()
+        {
+            
+        }
+        
+        
     }
 }

@@ -6,5 +6,9 @@
         /// 总体游戏时长 / 秒
         /// </summary>
         public static float TotalGameTime = 600f;
+        /// <summary>
+        /// 记录速率
+        /// </summary>
+        public static int RecordRate = 120;
     }
 }

@@ -2,9 +2,9 @@ using DFramework;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoSingleton<UIManager>
+public class UIMgr : MonoSingleton<UIMgr>
 {
-    private UIManager() { }
+    private UIMgr() { }
     [SerializeField] private List<GameObject> _views;
 
     public void Init()
