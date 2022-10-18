@@ -14,13 +14,11 @@ namespace Mgr
         /// </summary>
         private Dictionary<int, EntityBody> EntityDic;
         private float TotalFrame;
-        private int CurFrame;
 
         private GameTimeMgr()
         {
             EntityDic = new Dictionary<int, EntityBody>();
-            TotalFrame = Mathf.Round(GameConfig.TotalGameTime / Time.fixedDeltaTime);
-            CurFrame = 0;
+            // TotalFrame = Mathf.Round(GameConfig.TotalGameTime / Time.fixedDeltaTime);
         }
 
         public void AddEntity(int uid, EntityBody body)
@@ -43,10 +41,24 @@ namespace Mgr
             EntityDic.Remove(uid);
         }
 
-        public void FixedUpdate()
+        public void Update()
         {
-            //TODO 看一下丢到update里操作会不会影响性能，如果会就开个协程
-            
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.LogError("开始回放");
+                foreach (var kv in EntityDic)
+                {
+                    kv.Value.IsRewinding = true;
+                }
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                Debug.LogError("结束回放");
+                foreach (var kv in EntityDic)
+                {
+                    kv.Value.IsRewinding = false;
+                }
+            }
         }
     }
 }

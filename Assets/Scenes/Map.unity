@@ -950,6 +950,49 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1543203607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1543203609}
+  - component: {fileID: 1543203608}
+  m_Layer: 0
+  m_Name: GameTimeMgr
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1543203608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543203607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd6ad62ea6ff40a5a08a2cacadc967d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1543203609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543203607}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 250.18292, y: 438.77652, z: -78.102715}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1557793769
 GameObject:
   m_ObjectHideFlags: 0
@@ -2077,6 +2120,16 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!70 &1582380660 stripped
+CapsuleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 4111230397814070408, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
+  m_PrefabInstance: {fileID: 4990540178399448866}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &1582380661 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 4013841604973945383, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
+  m_PrefabInstance: {fileID: 4990540178399448866}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1886886673
 GameObject:
   m_ObjectHideFlags: 0
@@ -2218,5 +2271,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7749188325208291462, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
+      propertyPath: Collider
+      value: 
+      objectReference: {fileID: 1582380660}
+    - target: {fileID: 7749188325208291462, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
+      propertyPath: Rigidbody
+      value: 
+      objectReference: {fileID: 1582380661}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
