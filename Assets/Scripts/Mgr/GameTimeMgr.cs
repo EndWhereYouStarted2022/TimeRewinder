@@ -21,6 +21,16 @@ namespace Mgr
             // TotalFrame = Mathf.Round(GameConfig.TotalGameTime / Time.fixedDeltaTime);
         }
 
+        public void Init()
+        {
+            
+        }
+
+        public void Release()
+        {
+            
+        }
+
         public void AddEntity(int uid, EntityBody body)
         {
             if (EntityDic.ContainsKey(uid))

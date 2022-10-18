@@ -108,7 +108,10 @@ namespace Entity
             if (PointInTimes.Count <= 0) return;
             var point = PointInTimes[0];
             var tsf = transform;
-            PointInTimes.RemoveAt(0);
+            if (PointInTimes.Count > 0)
+            {
+                PointInTimes.RemoveAt(0);
+            }
             tsf.position = point.Position;
             tsf.rotation = point.Rotation;
             tsf.localScale = point.LocalScale;

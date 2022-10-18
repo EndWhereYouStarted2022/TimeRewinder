@@ -950,7 +950,7 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1543203607
+--- !u!1 &1501840788
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -958,34 +958,35 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1543203609}
-  - component: {fileID: 1543203608}
+  - component: {fileID: 1501840790}
+  - component: {fileID: 1501840789}
   m_Layer: 0
-  m_Name: GameTimeMgr
+  m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1543203608
+--- !u!114 &1501840789
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1543203607}
+  m_GameObject: {fileID: 1501840788}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd6ad62ea6ff40a5a08a2cacadc967d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f4f2d0aca254982b4610003ec8fa830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1543203609
+  Mode: 0
+--- !u!4 &1501840790
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1543203607}
+  m_GameObject: {fileID: 1501840788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 250.18292, y: 438.77652, z: -78.102715}
   m_LocalScale: {x: 1, y: 1, z: 1}
