@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5523183747042997606
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6759382383372159932}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6759382383372159932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5523183747042997606}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7116868106888255144}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7116868106888255147
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7116868106888255144}
   - component: {fileID: 7749188325208291462}
+  - component: {fileID: 1991608815241630938}
   - component: {fileID: 7116868106888255145}
   - component: {fileID: 7116868106888255150}
   - component: {fileID: 4013841604973945383}
@@ -31,7 +62,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 6759382383372159932}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,8 +79,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a63b1c84be41e084090c8f6103a468a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rigidbody: {fileID: 0}
-  Collider: {fileID: 0}
   _jumpForce: 400
   _movementSmoothing: 0.05
   _airControl: 0
@@ -60,6 +90,19 @@ MonoBehaviour:
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1991608815241630938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7116868106888255147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6217fcc85fafc914489932e4acbe7c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Center: {fileID: 6759382383372159932}
 --- !u!212 &7116868106888255145
 SpriteRenderer:
   m_ObjectHideFlags: 0
