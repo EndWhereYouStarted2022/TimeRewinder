@@ -19,6 +19,8 @@ namespace Rewind
         public UnityEvent onRewindStart;
         public UnityEvent onRewindEnd;
 
+        private float _gravity;
+
         private void Start()
         {
             Uid = GameMgr.Instance.GetGameOnlyId();
@@ -28,6 +30,18 @@ namespace Rewind
             rigidbody ??= GetComponentInChildren<Rigidbody2D>();
             animator ??= GetComponentInChildren<Animator>();
             collider ??= GetComponentInChildren<Collider2D>();
+
+            if (rigidbody)
+            {
+                _gravity = rigidbody.gravityScale;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            RewindMgr.Instance.RemoveEntity(Uid);
+            RewindMgr.Instance.OnRewindStart -= OnRewindStart;
+            RewindMgr.Instance.OnRewindStop -= OnRewindEnd;
         }
 
         public void Recording()
@@ -40,16 +54,39 @@ namespace Rewind
             data.Set(transform, animator);
         }
 
-        public void OnRewindStart()
+        private void OnRewindStart()
         {
             onRewindStart?.Invoke();
-            collider.enabled = false;
+            if (animator)
+            {
+                animator.speed = 0;
+            }
+            if (collider)
+            {
+                collider.enabled = false;
+            }
+            if (rigidbody)
+            {
+                rigidbody.gravityScale = 0;
+            }
         }
 
-        public void OnRewindEnd()
+        private void OnRewindEnd()
         {
             onRewindEnd?.Invoke();
-            collider.enabled = true;
+            if (animator)
+            {
+                animator.speed = 1;
+            }
+            if (collider)
+            {
+                collider.enabled = true;
+            }
+            if (rigidbody)
+            {
+                rigidbody.velocity = Vector2.zero;
+                rigidbody.gravityScale = _gravity;
+            }
         }
 
     }

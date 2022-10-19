@@ -12,7 +12,7 @@ namespace Mgr
         /// <summary>
         /// 是否在回放
         /// </summary>
-        public bool IsRewind { private set; get; }
+        public bool IsRewinding { private set; get; }
 
         #endregion
 
@@ -92,7 +92,7 @@ namespace Mgr
             if (!GameMgr.Instance.IsRunning) return;
             foreach (var kv in EntityDic)
             {
-                if (IsRewind)
+                if (IsRewinding)
                 {
                     kv.Value.Rewinding();
                 }
@@ -105,13 +105,13 @@ namespace Mgr
 
         public void StartRewind()
         {
-            IsRewind = true;
+            IsRewinding = true;
             OnRewindStart?.Invoke();
         }
 
         public void StopRewind()
         {
-            IsRewind = false;
+            IsRewinding = false;
             OnRewindStop?.Invoke();
         }
         

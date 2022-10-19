@@ -5,20 +5,22 @@ using UnityEngine;
 public class GameMgr : MonoSingleton<GameMgr>
 {
     private int _idCounter;
-    
+
     /// <summary>
     /// 游戏是否正常在运行（是否正常记录）
     /// </summary>
     public bool IsRunning { private set; get; }
-    
-    private GameMgr()
-    {
-        EnterGame();
-    }
+
+    private GameMgr() { }
 
     private void OnApplicationQuit()
     {
         ExitGame();
+    }
+
+    public void Start()
+    {
+        EnterGame();
     }
 
     /// <summary>
@@ -27,6 +29,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     private void EnterGame()
     {
         _idCounter = 0;
+        IsRunning = true;
     }
 
     /// <summary>
@@ -34,7 +37,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// </summary>
     private void ExitGame()
     {
-        
+        IsRunning = false;
     }
 
     /// <summary>
@@ -46,5 +49,5 @@ public class GameMgr : MonoSingleton<GameMgr>
         _idCounter++;
         return _idCounter;
     }
-    
+
 }

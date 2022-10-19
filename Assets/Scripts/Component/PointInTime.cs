@@ -29,7 +29,10 @@ namespace Rewind
         public Vector3 Get()
         {
             var v3 = position[0];
-            position.RemoveAt(0);
+            if (position.Count > 1)
+            {
+                position.RemoveAt(0);
+            }
             return v3;
         }
     }
@@ -47,7 +50,10 @@ namespace Rewind
         public Quaternion Get()
         {
             var q = quaternion[0];
-            quaternion.RemoveAt(0);
+            if (quaternion.Count > 1)
+            {
+                quaternion.RemoveAt(0);
+            }
             return q;
         }
     }
@@ -75,39 +81,48 @@ namespace Rewind
         public void Set(Animator ani)
         {
             var name = aniName[0];
-            aniName.RemoveAt(0);
+            if (aniName.Count > 1)
+            {
+                aniName.RemoveAt(0);
+            }
             var time = normalizedTime[0];
-            normalizedTime.RemoveAt(0);
+            if (normalizedTime.Count > 1)
+            {
+                normalizedTime.RemoveAt(0);
+            }
+            ani.speed = 1f;
+            Debug.LogError(time);
             ani.Play(name, 0, time);
+            ani.speed = 0f;
         }
     }
 
     public class RewindData
     {
-        public TimeLinedVector3 Position;
-        public TimeLinedQuaternion Rotation;
-        public TimeLinedVector3 Scale;
-        public TimeLinedAnimator Animator;
+        private readonly TimeLinedVector3 position = new TimeLinedVector3();
+        private readonly TimeLinedQuaternion rotation = new TimeLinedQuaternion();
+        private readonly TimeLinedVector3 scale = new TimeLinedVector3();
+        private readonly TimeLinedAnimator animator = new TimeLinedAnimator();
 
-        public void Add(Transform tsf, Animator animator = null)
+        public void Add(Transform tsf, Animator ani = null)
         {
-            Position.Add(tsf.position);
-            Rotation.Add(tsf.rotation);
-            Scale.Add(tsf.localScale);
-            if (animator)
+            position.Add(tsf.position);
+            rotation.Add(tsf.rotation);
+            scale.Add(tsf.localScale);
+            if (ani)
             {
-                Animator.Add(animator);
+                this.animator.Add(ani);
             }
         }
 
-        public void Set(Transform tsf, Animator animator = null)
+        public void Set(Transform tsf, Animator ani = null)
         {
-            tsf.position = Position.Get();
-            tsf.rotation = Rotation.Get();
-            tsf.localScale = Scale.Get();
-            if (animator)
+            tsf.position = position.Get();
+            tsf.rotation = rotation.Get();
+            tsf.localScale = scale.Get();
+            if (ani)
             {
-                Animator.Set(animator);
+                this.animator.Set(ani);
             }
         }
     }
