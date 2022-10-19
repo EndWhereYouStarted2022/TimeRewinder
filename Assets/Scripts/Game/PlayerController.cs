@@ -8,21 +8,30 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private bool _airControl = false;							// Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask _groundLayer;							// A mask determining what is ground to the character
 	[SerializeField] private Transform _groundCheck;							// A position marking where to check if the player is grounded.
+	[SerializeField] private LayerMask _ladderLayer;
 	[SerializeField] private Animator _anim;
 	const float _groundedRadius = .1f; // Radius of the overlap circle to determine if grounded
+	const float _ladderCheckRadius = .16f; // Radius of the overlap circle to determine if grounded
 	private bool _grounded = true;            // Whether or not the player is grounded.
 	private Rigidbody2D _rb;
 	private bool _facingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 _velocity = Vector3.zero;
 
-	private Collider2D[] _groundColliders; // Cache Collider2D array used in Fixed Update to check for ground collision
-	private float _movement = 0;
-	private bool _jump = false;
+	private Collider2D[] _cacheColliders; // Cache Collider2D array used in Fixed Update to check for ground collision
+	private Vector2 _movement = Vector2.zero;
+	private bool _jump;
+	private bool _isClimbing;
+	private bool _isOnLadder;
 	
 	[Header("Events")]
 	[Space]
 
 	public UnityEvent OnLandEvent;
+
+	private static readonly int IsGround = Animator.StringToHash("isGround");
+	private static readonly int IsRunning = Animator.StringToHash("isRunning");
+	private static readonly int Jump = Animator.StringToHash("jump");
+	private static readonly int IsClimbing = Animator.StringToHash("isClimbing");
 
 	[System.Serializable]
 	public class BoolEvent : UnityEvent<bool> { }
@@ -31,19 +40,24 @@ public class PlayerController : MonoBehaviour
 	{
 		_rb = GetComponent<Rigidbody2D>();
 		_anim = GetComponent<Animator>();
-		_groundColliders = new Collider2D[6];
+		_cacheColliders = new Collider2D[6];
 		if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
 	}
 
 	private void Update()
 	{
-		_movement = Input.GetAxisRaw("Horizontal");
+		_movement.x = Input.GetAxisRaw("Horizontal");
+		_movement.y = Input.GetAxisRaw("Vertical");
 		_jump = Input.GetAxisRaw("Jump") > 0;
+		//play running animation 
+		_anim.SetBool(IsRunning,Mathf.Abs(_movement.x) > 0);
+		_anim.SetBool(IsClimbing,_isOnLadder && Mathf.Abs(_movement.y) > 0);
 	}
 
 	protected void FixedUpdate()
 	{
+		// UpdateLadderStatus();
 		UpdateGroundStatus();
 		Move(_movement, _jump);
 	}
@@ -53,10 +67,10 @@ public class PlayerController : MonoBehaviour
 		bool wasGrounded = _grounded;
 		_grounded = false;
 		
-		int size = Physics2D.OverlapCircleNonAlloc(_groundCheck.position, _groundedRadius, _groundColliders, _groundLayer);
+		int size = Physics2D.OverlapCircleNonAlloc(_groundCheck.position, _groundedRadius, _cacheColliders, _groundLayer);
 		for (int i = 0; i < size; i++)
 		{
-			if (_groundColliders[i].gameObject != gameObject)
+			if (_cacheColliders[i].gameObject != gameObject)
 			{
 				_grounded = true;
 				if (!wasGrounded)
@@ -64,37 +78,63 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 		//set animator parameter
-		_anim.SetBool("isGround", _grounded);
+		_anim.SetBool(IsGround, _grounded);
+	}
+	void UpdateLadderStatus()
+	{
+		_isOnLadder = false;
+		
+		int size = Physics2D.OverlapCircleNonAlloc(transform.position, _ladderCheckRadius, _cacheColliders, _ladderLayer);
+		for (int i = 0; i < size; i++)
+		{
+			if (_cacheColliders[i].gameObject != gameObject)
+				_isOnLadder = true;
+		}
 	}
 	
-	public void Move(float move, bool jump)
+	public void Move(Vector2 move, bool jump)
 	{
+		// if (_isOnLadder && Mathf.Abs(_movement.y) > 0)
+		// {
+		// 	_isClimbing = true;
+		// 	
+		// 	ClimbMove(move.y);
+		// 	return;
+		// }
+		
 		if (_grounded || _airControl)
 		{
-			Vector3 targetVelocity = new Vector2(move * 10f, _rb.velocity.y);
-			// And then smoothing it out and applying it to the character
-			_rb.velocity = Vector3.SmoothDamp(_rb.velocity, targetVelocity, ref _velocity, _movementSmoothing);
-			//play running animation 
-			_anim.SetBool("isRunning",Mathf.Abs(move) > 0);
-			
-			//Flip left or right
-			if (move > 0 && !_facingRight)
-				Flip();
-			else if (move < 0 && _facingRight)
-				Flip();
-			
+			HorizontalMove(_movement.x);
 		}
+		
 		// If the player should jump...
 		if (_grounded && jump)
 		{
 			// Add a vertical force to the player.
 			_grounded = false;
 			_rb.AddForce(new Vector2(0f, _jumpForce));
-			//play jumping animation 
-			_anim.SetTrigger("Jump");
+			_anim.SetTrigger(Jump);
 		}
 	}
 
+	void ClimbMove(float yMove)
+	{
+		SmoothMove(new Vector2(0, yMove * 3f));
+	}
+
+	void HorizontalMove(float xMove)
+	{
+		SmoothMove(new Vector2(xMove * 6f, _rb.velocity.y));
+		if (xMove > 0 && !_facingRight)
+			Flip();
+		else if (xMove < 0 && _facingRight)
+			Flip();
+	}
+
+	void SmoothMove(Vector2 velocity)
+	{
+		_rb.velocity = Vector3.SmoothDamp(_rb.velocity, velocity, ref _velocity, _movementSmoothing);
+	}
 
 	private void Flip()
 	{

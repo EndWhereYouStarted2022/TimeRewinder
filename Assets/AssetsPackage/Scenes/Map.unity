@@ -170,7 +170,7 @@ MonoBehaviour:
   m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
   m_LookaheadTime: 0.3
   m_LookaheadSmoothing: 10
-  m_LookaheadIgnoreY: 0
+  m_LookaheadIgnoreY: 1
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -456,6 +456,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8754618857846427516, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[0].second.m_AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754618857846427516, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[1].second.m_AnimationSpeed
       value: 5
       objectReference: {fileID: 0}
@@ -542,6 +546,10 @@ PrefabInstance:
     - target: {fileID: 8754618858399828471, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
       propertyPath: m_Name
       value: Grid
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754618858996679583, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8754618859213758182, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
       propertyPath: m_Material
@@ -667,6 +675,27 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1267909081 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8754618858996679583, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
+  m_PrefabInstance: {fileID: 716354861}
+  m_PrefabAsset: {fileID: 0}
+--- !u!19719996 &1267909082
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267909081}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
 --- !u!70 &1582380660 stripped
 CapsuleCollider2D:
   m_CorrespondingSourceObject: {fileID: 4111230397814070408, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
@@ -816,7 +845,7 @@ PrefabInstance:
       objectReference: {fileID: 1582380661}
     - target: {fileID: 7749188325208291462, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
       propertyPath: _jumpForce
-      value: 520
+      value: 530
       objectReference: {fileID: 0}
     - target: {fileID: 7749188325208291462, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
       propertyPath: _airControl
@@ -829,6 +858,10 @@ PrefabInstance:
     - target: {fileID: 7749188325208291462, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
       propertyPath: _groundLayer.m_Bits
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7749188325208291462, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
+      propertyPath: _ladderLayer.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1991608815241630938, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
