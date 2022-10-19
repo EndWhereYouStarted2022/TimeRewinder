@@ -1,4 +1,5 @@
 using Mgr;
+using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
 	const float _ladderCheckRadius = .16f; // Radius of the overlap circle to determine if grounded
 	private bool _grounded = true;            // Whether or not the player is grounded.
 	private Rigidbody2D _rb;
+	private Collider2D _collider;
 	private bool _facingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 _velocity = Vector3.zero;
 
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
 	private bool _jump;
 	private bool _isClimbing;
 	private bool _isOnLadder;
+	private float _ladderX; //Snap player into ladder's x position
 	
 	[Header("Events")]
 	[Space]
@@ -31,19 +34,16 @@ public class PlayerController : MonoBehaviour
 
 	private static readonly int IsGround = Animator.StringToHash("isGround");
 	private static readonly int IsRunning = Animator.StringToHash("isRunning");
-	private static readonly int Jump = Animator.StringToHash("jump");
+	private static readonly int Jump = Animator.StringToHash("Jump");
 	private static readonly int IsClimbing = Animator.StringToHash("isClimbing");
 
-	[System.Serializable]
-	public class BoolEvent : UnityEvent<bool> { }
 
 	protected void Awake()
 	{
 		_rb = GetComponent<Rigidbody2D>();
+		_collider = GetComponent<Collider2D>();
 		_anim = GetComponent<Animator>();
 		_cacheColliders = new Collider2D[6];
-		if (OnLandEvent == null)
-			OnLandEvent = new UnityEvent();
 	}
 
 	private void Update()
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
 	protected void FixedUpdate()
 	{
-		// UpdateLadderStatus();
+		UpdateLadderStatus();
 		UpdateGroundStatus();
 		Move(_movement, _jump);
 	}
@@ -90,19 +90,29 @@ public class PlayerController : MonoBehaviour
 		for (int i = 0; i < size; i++)
 		{
 			if (_cacheColliders[i].gameObject != gameObject)
+			{
 				_isOnLadder = true;
+				break;
+			}
+		}
+
+		if (!_isOnLadder && _isClimbing)
+		{
+			OnEndClimb();
 		}
 	}
 	
 	public void Move(Vector2 move, bool jump)
 	{
-		// if (_isOnLadder && Mathf.Abs(_movement.y) > 0)
-		// {
-		// 	_isClimbing = true;
-		// 	
-		// 	ClimbMove(move.y);
-		// 	return;
-		// }
+		if (_isOnLadder && Mathf.Abs(_movement.y) > 0)
+		{
+			if (!_isClimbing)
+				OnStartClimb();
+			_isClimbing = true;
+			
+			ClimbMove(move.y);
+			return;
+		}
 		
 		if (_grounded || _airControl)
 		{
@@ -149,9 +159,20 @@ public class PlayerController : MonoBehaviour
 		transform.localScale = theScale;
 	}
 
+	void OnStartClimb()
+	{
+		_movement = Vector2.zero;
+		_collider.enabled = false;
+	}
+
+	void OnEndClimb()
+	{
+		_isClimbing = false;
+		_collider.enabled = true;
+	}
+	
 	public void OnRewindStart()
 	{
-		Debug.LogError("1111");
 		_movement = Vector2.zero;
 		_anim.SetBool(IsRunning,true);
 		_anim.Play("Player_Run");
