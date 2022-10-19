@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private LayerMask _groundLayer;							// A mask determining what is ground to the character
 	[SerializeField] private Transform _groundCheck;							// A position marking where to check if the player is grounded.
 	[SerializeField] private Animator _anim;
-	const float _groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+	const float _groundedRadius = .1f; // Radius of the overlap circle to determine if grounded
 	private bool _grounded = true;            // Whether or not the player is grounded.
 	private Rigidbody2D _rb;
 	private bool _facingRight = true;  // For determining which way the player is currently facing.
@@ -39,12 +39,12 @@ public class PlayerController : MonoBehaviour
 	private void Update()
 	{
 		_movement = Input.GetAxisRaw("Horizontal");
-		_jump = Input.GetAxisRaw("Vertical") > 0;
+		_jump = Input.GetAxisRaw("Jump") > 0;
 	}
 
 	protected void FixedUpdate()
 	{
-		// UpdateGroundStatus();
+		UpdateGroundStatus();
 		Move(_movement, _jump);
 	}
 	
@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 		//set animator parameter
-		_anim.SetBool("isGround",_grounded);
+		_anim.SetBool("isGround", _grounded);
 	}
 	
 	public void Move(float move, bool jump)
