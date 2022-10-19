@@ -13,10 +13,7 @@ namespace Mgr
         /// 是否在回放
         /// </summary>
         public bool IsRewind { private set; get; }
-        /// <summary>
-        /// 游戏是否正常在运行（是否正常记录）
-        /// </summary>
-        public bool IsRunning { private set; get; }
+
         #endregion
 
         #region Time
@@ -25,7 +22,6 @@ namespace Mgr
         #endregion
 
         #region Action
-        public Action<float> OnRewindTimeChange;
         public Action OnRewindStart;
         public Action OnRewindStop;
         #endregion
@@ -33,12 +29,11 @@ namespace Mgr
         /// <summary>
         /// 存放所有实体角色的列表
         /// </summary>
-        private Dictionary<int, RewindEntityOld> EntityDic;
-        private float TotalFrame;
+        private Dictionary<int, RewindEntity> EntityDic;
 
         private RewindMgr()
         {
-            EntityDic = new Dictionary<int, RewindEntityOld>();
+            EntityDic = new Dictionary<int, RewindEntity>();
             // TotalFrame = Mathf.Round(GameConfig.TotalGameTime / Time.fixedDeltaTime);
         }
 
@@ -52,7 +47,7 @@ namespace Mgr
             
         }
 
-        public void AddEntity(int uid, RewindEntityOld body)
+        public void AddEntity(int uid, RewindEntity body)
         {
             if (EntityDic.ContainsKey(uid))
             {
@@ -79,7 +74,7 @@ namespace Mgr
                 Debug.LogError("开始回放");
                 foreach (var kv in EntityDic)
                 {
-                    kv.Value.IsRewinding = true;
+                    StartRewind();
                 }
             }
             if (Input.GetMouseButtonUp(0))
@@ -87,29 +82,37 @@ namespace Mgr
                 Debug.LogError("结束回放");
                 foreach (var kv in EntityDic)
                 {
-                    kv.Value.IsRewinding = false;
+                    StopRewind();
                 }
             }
         }
 
-        /// <summary>
-        /// 获得当前的游戏时间
-        /// </summary>
-        /// <returns></returns>
-        public float GetCurrentTime()
+        public void FixedUpdate()
         {
-            //TODO 回放后的时间调整
-            return Time.time - _startTime;
+            if (!GameMgr.Instance.IsRunning) return;
+            foreach (var kv in EntityDic)
+            {
+                if (IsRewind)
+                {
+                    kv.Value.Rewinding();
+                }
+                else
+                {
+                    kv.Value.Recording();
+                }
+            }
         }
 
         public void StartRewind()
         {
-            
+            IsRewind = true;
+            OnRewindStart?.Invoke();
         }
 
         public void StopRewind()
         {
-            
+            IsRewind = false;
+            OnRewindStop?.Invoke();
         }
         
         

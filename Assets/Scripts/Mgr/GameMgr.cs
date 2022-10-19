@@ -5,6 +5,12 @@ using UnityEngine;
 public class GameMgr : MonoSingleton<GameMgr>
 {
     private int _idCounter;
+    
+    /// <summary>
+    /// 游戏是否正常在运行（是否正常记录）
+    /// </summary>
+    public bool IsRunning { private set; get; }
+    
     private GameMgr()
     {
         EnterGame();

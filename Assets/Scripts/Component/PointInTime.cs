@@ -1,5 +1,6 @@
 ﻿using Mgr;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 namespace Rewind
 {
@@ -18,63 +19,66 @@ namespace Rewind
     [Serializable]
     public class TimeLinedVector3
     {
-        public AnimationCurve x;
-        public AnimationCurve y;
-        public AnimationCurve z;
+        private List<Vector3> position = new List<Vector3>();
 
         public void Add(Vector3 v3)
         {
-            var time = RewindMgr.Instance.GetCurrentTime();
-            x.AddKey(time, v3.x);
-            y.AddKey(time, v3.y);
-            z.AddKey(time, v3.z);
+            position.Insert(0, v3);
         }
 
-        public Vector3 Get(float time)
+        public Vector3 Get()
         {
-            return new Vector3(x.Evaluate(time), y.Evaluate(time), z.Evaluate(time));
+            var v3 = position[0];
+            position.RemoveAt(0);
+            return v3;
         }
     }
 
     [Serializable]
     public class TimeLinedQuaternion
     {
-        public AnimationCurve x;
-        public AnimationCurve y;
-        public AnimationCurve z;
-        public AnimationCurve w;
+        private List<Quaternion> quaternion = new List<Quaternion>();
 
-        public void Add(Quaternion v)
+        public void Add(Quaternion q)
         {
-            var time = RewindMgr.Instance.GetCurrentTime();
-            x.AddKey(time, v.x);
-            y.AddKey(time, v.y);
-            z.AddKey(time, v.z);
-            w.AddKey(time, v.w);
+            quaternion.Insert(0, q);
         }
 
-        public Quaternion Get(float time)
+        public Quaternion Get()
         {
-            return new Quaternion(x.Evaluate(time), y.Evaluate(time), z.Evaluate(time), w.Evaluate(time));
+            var q = quaternion[0];
+            quaternion.RemoveAt(0);
+            return q;
         }
     }
 
     [Serializable]
     public class TimeLinedAnimator
     {
-        
+        private List<string> aniName = new List<string>();
+        private List<float> normalizedTime = new List<float>();
+
         public void Add(Animator animator)
         {
-            // float time = RewindMgr.Instance.GetCurrentTime();
-            // x.AddKey (time, v.x);
-            // y.AddKey (time, v.y);
-            // z.AddKey (time, v.z);
-            // w.AddKey (time, v.w);
+            var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            var time = stateInfo.normalizedTime;
+            normalizedTime.Insert(0, time);
+            var clips = animator.runtimeAnimatorController.animationClips;
+            foreach (var clip in clips)
+            {
+                if (!stateInfo.IsName(clip.name)) continue;
+                aniName.Insert(0, clip.name);
+                break;
+            }
         }
 
-        public void Set(float time, Animator ani)
+        public void Set(Animator ani)
         {
-
+            var name = aniName[0];
+            aniName.RemoveAt(0);
+            var time = normalizedTime[0];
+            normalizedTime.RemoveAt(0);
+            ani.Play(name, 0, time);
         }
     }
 
@@ -96,14 +100,14 @@ namespace Rewind
             }
         }
 
-        public void Set(float time, Transform tsf, Animator animator = null)
+        public void Set(Transform tsf, Animator animator = null)
         {
-            tsf.position = Position.Get(time);
-            tsf.rotation = Rotation.Get(time);
-            tsf.localScale = Scale.Get(time);
+            tsf.position = Position.Get();
+            tsf.rotation = Rotation.Get();
+            tsf.localScale = Scale.Get();
             if (animator)
             {
-                Animator.Set(time, animator);
+                Animator.Set(animator);
             }
         }
     }
