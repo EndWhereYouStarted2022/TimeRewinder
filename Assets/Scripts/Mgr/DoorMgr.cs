@@ -28,5 +28,6 @@ public class DoorMgr : MonoSingleton<DoorMgr>
             return;
         }
         doors[currentDoor].SetActive(false);
+        currentDoor++;
     }
 }
