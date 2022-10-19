@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
+		if(RewindMgr.Instance.IsRewinding) return;
 		_movement.x = Input.GetAxisRaw("Horizontal");
 		_movement.y = Input.GetAxisRaw("Vertical");
 		_jump = Input.GetAxisRaw("Jump") > 0;
@@ -146,5 +147,13 @@ public class PlayerController : MonoBehaviour
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+	}
+
+	public void OnRewindStart()
+	{
+		Debug.LogError("1111");
+		_movement = Vector2.zero;
+		_anim.SetBool(IsRunning,true);
+		_anim.Play("Player_Run");
 	}
 }

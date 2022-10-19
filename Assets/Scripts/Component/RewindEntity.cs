@@ -51,7 +51,7 @@ namespace Rewind
 
         public void Rewinding()
         {
-            data.Set(transform, animator);
+            data.Set(transform);
         }
 
         private void OnRewindStart()
@@ -59,7 +59,7 @@ namespace Rewind
             onRewindStart?.Invoke();
             if (animator)
             {
-                animator.speed = 0;
+                // animator.speed = 0;
             }
             if (collider)
             {
@@ -76,7 +76,7 @@ namespace Rewind
             onRewindEnd?.Invoke();
             if (animator)
             {
-                animator.speed = 1;
+                // animator.speed = 1;
             }
             if (collider)
             {
