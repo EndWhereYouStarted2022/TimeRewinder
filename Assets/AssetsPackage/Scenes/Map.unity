@@ -554,9 +554,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8754618857832715099, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8754618857846427512, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754618857846427512, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8754618857846427516, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[1].second.m_AnimationSpeed
@@ -568,7 +576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8754618857846427516, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[5].second.m_AnimationSpeed
-      value: 5.0000005
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8754618857846427516, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[6].second.m_AnimationSpeed
@@ -576,7 +584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8754618857846427516, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[9].second.m_AnimationSpeed
-      value: 5.0000005
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8754618858399828469, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
       propertyPath: m_RootOrder
@@ -625,6 +633,10 @@ PrefabInstance:
     - target: {fileID: 8754618858399828471, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
       propertyPath: m_Name
       value: Grid
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754618859213758178, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
@@ -835,43 +847,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ef7da5038594447a89468482848ca5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody: {fileID: 1582380661}
-  collider: {fileID: 1582380660}
-  animator: {fileID: 2126462538}
+  rigidbody: {fileID: 0}
+  collider: {fileID: 0}
+  animator: {fileID: 0}
   onRewindStart:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2126462541}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnRewindStart
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onRewindEnd:
     m_PersistentCalls:
       m_Calls: []
---- !u!95 &2126462538 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 7116868106888255150, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
-  m_PrefabInstance: {fileID: 4990540178399448866}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2126462541 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7749188325208291462, guid: d59aaeb56f83d2a4b910428015f8ca86, type: 3}
-  m_PrefabInstance: {fileID: 4990540178399448866}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2126462536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a63b1c84be41e084090c8f6103a468a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4990540178399448866
 PrefabInstance:
   m_ObjectHideFlags: 0
