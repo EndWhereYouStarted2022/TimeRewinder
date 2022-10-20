@@ -2,10 +2,13 @@ using Config;
 using DFramework;
 using Mgr;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameMgr : MonoSingleton<GameMgr>
 {
+    public List<GameObject> rewindEffect;
+    
     /// <summary>
     /// 正数时间
     /// </summary>
@@ -175,6 +178,10 @@ public class GameMgr : MonoSingleton<GameMgr>
     public void SetRewindState(bool rewinding)
     {
         IsRewinding = rewinding;
+        foreach (var obj in rewindEffect)
+        {
+            obj.SetActive(rewinding);
+        }
     }
 
     public void AddRewindPower(float power)
@@ -182,11 +189,11 @@ public class GameMgr : MonoSingleton<GameMgr>
         _rewindPower += _rewindPower;
     }
 
-    public void OnGUI()
-    {
-        GUI.Label(new Rect(10, 10, 100, 20), RemainTime.ToString());
-        GUI.Label(new Rect(10, 30, 100, 20), Power.ToString());
-        GUI.Label(new Rect(10, 50, 100, 20), TimeGone.ToString());
-    }
+    // public void OnGUI()
+    // {
+    //     GUI.Label(new Rect(10, 10, 100, 20), RemainTime.ToString());
+    //     GUI.Label(new Rect(10, 30, 100, 20), Power.ToString());
+    //     GUI.Label(new Rect(10, 50, 100, 20), TimeGone.ToString());
+    // }
 
 }
