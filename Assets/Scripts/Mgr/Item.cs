@@ -24,9 +24,8 @@ public class Item : MonoBehaviour
         //判断玩家销毁并增加回溯时间
         if (other.tag == "Player")
         {
-            Destroy(transform.gameObject);
             GameMgr.Instance.AddRewindPower(timer);
-            
+            Destroy(transform.gameObject);
         }
     }
 }
