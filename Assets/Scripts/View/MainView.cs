@@ -1,3 +1,4 @@
+using Mgr;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,11 +6,22 @@ using UnityEngine.SceneManagement;
 public class MainView : MonoBehaviour
 {
     public Button btnStart;
+    private GameObject msgBox;
     void Start()
     {
+        msgBox = transform.parent.Find("MessageBox").gameObject;
         btnStart.onClick.AddListener(() =>
         {
-            UIMgr.Instance.OpenMsgBox("游戏即将开始，请做好准备...",3,OnBtnOk,OnBtnCancel);
+            // NotificationMgr.Instance.SendMsg("OnMainStart",new MsgBoxParam()
+            //     {tip ="游戏即将开始，请做好准备...",countDown = 3,onCancel =OnBtnCancel,onOk = OnBtnOk});
+            if (!msgBox.activeInHierarchy)
+            {
+                msgBox.SetActive(true);
+                var msg = msgBox.GetComponent<MessageBox>();
+                msg.SetText("游戏即将开始，请做好准备...");
+                msg.SetCountDown(3);
+                msg.SetDelegate(OnBtnOk,OnBtnCancel);
+            }
         });
     }
 
@@ -20,6 +32,7 @@ public class MainView : MonoBehaviour
 
     private void OnBtnCancel()
     {
-        UIMgr.Instance.CloseMsgBox();
+        msgBox?.SetActive(false);
     }
+    
 }
