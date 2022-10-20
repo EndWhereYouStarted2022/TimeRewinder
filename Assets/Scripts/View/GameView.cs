@@ -3,11 +3,13 @@ using Config;
 using Mgr;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameView : MonoBehaviour
 {
     private PlayerController _playerController;
+    private GameObject msgBox;
     public GameObject btnRewind;
     public RectTransform timeBar;//timeBar's width will grow as time goes by 
     public Image rewindBar;//rewind time
@@ -25,6 +27,17 @@ public class GameView : MonoBehaviour
         _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         btnRewind.GetComponent<ButtonListener>().OnDown.AddListener(()=>{ RewindMgr.Instance.StartRewind(); });
         btnRewind.GetComponent<ButtonListener>().OnUp.AddListener(()=>{ RewindMgr.Instance.StopRewind(); });
+        msgBox = transform.parent.Find("MessageBox").gameObject;
+        if (!msgBox.activeInHierarchy)
+        {
+            msgBox.SetActive(true);
+            var msg = msgBox.GetComponent<MessageBox>();
+            msg.HideCancelBtn();
+            msg.SetText("游戏即将开始，请做好准备...");
+            msg.SetCountDown(3);
+            msg.SetDelegate(OnBtnOk,null);
+            msgBox.SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -58,4 +71,12 @@ public class GameView : MonoBehaviour
         timeBar.sizeDelta = new Vector2(_pastTime/60*widthPerMinute,50) ;
         rewindBar.fillAmount = _rewindTime / _pastTime;
     }
+    
+    private void OnBtnOk()
+    {
+        msgBox.SetActive(false);
+        //开始游戏，开始计时
+        
+    }
+
 }

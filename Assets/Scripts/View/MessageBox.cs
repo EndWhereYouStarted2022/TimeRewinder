@@ -27,8 +27,11 @@ public class MessageBox : MonoBehaviour
         });
         
     }
-    
 
+    public void HideCancelBtn()
+    {
+        btnCancel.gameObject.SetActive(false);
+    }
     public void SetText(string tip)
     {
         txtTip.text = tip;
