@@ -1,16 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DFramework;
 using UnityEngine;
 
-public class EntryMgr : MonoBehaviour
+public class EntryMgr : MonoSingleton<EntryMgr>
 {
     private Animator entryAni;
     private BoxCollider2D entryBox;
+
+    private void Awake()
+    {
+        throw new NotImplementedException();
+    }
+
     private void Start()
     {
         entryAni = transform.GetComponent<Animator>();
         entryBox = transform.GetComponent<BoxCollider2D>();
+        CloseEntry();
     }
     /// <summary>
     /// 打开入口
