@@ -6,13 +6,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
-public struct MsgBoxParam
-{
-    public string tip;
-    public int countDown;
-    public UnityAction onOk;
-    public UnityAction onCancel;
-}
 public class MessageBox : MonoBehaviour
 {
     [SerializeField] private Button btnOK;
@@ -24,17 +17,6 @@ public class MessageBox : MonoBehaviour
     private UnityAction _OnBtnCancel;
     void Start()
     {
-        // NotificationMgr.Instance.RegisterMsg("OnMainStart", (obj) =>
-        // {
-        //     MsgBoxParam param = (MsgBoxParam) obj;
-        //     SetText(param.tip);
-        //     SetCountDown(param.countDown);
-        //     SetDelegate(param.onOk,param.onCancel);
-        //     if (!gameObject.activeInHierarchy)
-        //     {
-        //         gameObject.SetActive(true);
-        //     }
-        // });
         btnOK.onClick.AddListener(() =>
         {
             _OnBtnOk?.Invoke();
@@ -45,11 +27,7 @@ public class MessageBox : MonoBehaviour
         });
         
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
+    
 
     public void SetText(string tip)
     {
