@@ -34,7 +34,8 @@ public class PlayerController : MonoBehaviour
 	private static readonly int Jump = Animator.StringToHash("Jump");
 	private static readonly int IsClimbing = Animator.StringToHash("isClimbing");
 	private static readonly int IsRewinding = Animator.StringToHash("isRewinding");
-	
+	private static readonly int Climb = Animator.StringToHash("Climb");
+
 	protected void Awake()
 	{
 		_rb = GetComponent<Rigidbody2D>();
@@ -52,7 +53,6 @@ public class PlayerController : MonoBehaviour
 		_jump = Input.GetAxisRaw("Jump") > 0;
 		//play running animation 
 		_anim.SetBool(IsRunning,Mathf.Abs(_movement.x) > 0);
-		_anim.SetBool(IsClimbing, _isClimbing);
 	}
 
 	protected void FixedUpdate()
@@ -174,16 +174,21 @@ public class PlayerController : MonoBehaviour
 
 	void OnStartClimb()
 	{
+		Debug.Log("On Start Climb");
 		_movement = Vector2.zero;
 		_rb.gravityScale = 0;
 		ToggleFloorCollision(true);
+		_anim.SetTrigger(Climb);
+		_anim.SetBool(IsClimbing, _isClimbing);
 	}
 
 	void OnEndClimb()
 	{
+		Debug.Log("On End Climb");
 		_isClimbing = false;
 		_rb.gravityScale = Config.GameConfig.GravityScale;
 		ToggleFloorCollision(false);
+		_anim.SetBool(IsClimbing, _isClimbing);
 	}
 	
 	public void OnRewindStart()
