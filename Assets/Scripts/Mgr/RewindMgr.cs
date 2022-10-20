@@ -12,15 +12,20 @@ namespace Mgr
         /// <summary>
         /// 是否在回放
         /// </summary>
-        public bool IsRewinding { private set; get; }
+        private bool IsRewinding
+        {
+            set
+            {
+                GameMgr.Instance.SetRewindState(value);
+            }
+            get
+            {
+                return GameMgr.Instance.IsRewinding;
+            }
+        }
 
         #endregion
-
-        #region Time
-        private float _startTime;
-        private float _endTime;
-        #endregion
-
+        
         #region Action
         public Action OnRewindStart;
         public Action OnRewindStop;
@@ -39,12 +44,14 @@ namespace Mgr
 
         public void EnterGame()
         {
-            _startTime = Time.time;
+            
         }
 
         public void ReleaseGame()
         {
-            
+            EntityDic.Clear();
+            OnRewindStart = null;
+            OnRewindStop = null;
         }
 
         public void AddEntity(int uid, RewindEntity body)
@@ -67,29 +74,11 @@ namespace Mgr
             EntityDic.Remove(uid);
         }
 
-        public void Update()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Debug.LogError("开始回放");
-                foreach (var kv in EntityDic)
-                {
-                    StartRewind();
-                }
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                Debug.LogError("结束回放");
-                foreach (var kv in EntityDic)
-                {
-                    StopRewind();
-                }
-            }
-        }
+
 
         public void FixedUpdate()
         {
-            if (!GameMgr.Instance.IsRunning) return;
+            // if (!GameMgr.Instance.IsRunning) return;
             foreach (var kv in EntityDic)
             {
                 if (IsRewinding)
@@ -105,12 +94,14 @@ namespace Mgr
 
         public void StartRewind()
         {
+            if (IsRewinding == true) return;
             IsRewinding = true;
             OnRewindStart?.Invoke();
         }
 
         public void StopRewind()
         {
+            if (IsRewinding == false) return;
             IsRewinding = false;
             OnRewindStop?.Invoke();
         }

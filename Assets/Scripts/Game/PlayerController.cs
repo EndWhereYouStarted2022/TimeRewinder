@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
-		if(RewindMgr.Instance.IsRewinding) return;
+		if(GameMgr.Instance.IsRewinding) return;
 		_movement.x = Input.GetAxisRaw("Horizontal");
 		_movement.y = Input.GetAxisRaw("Vertical");
 		_jump = Input.GetAxisRaw("Jump") > 0;

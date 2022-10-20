@@ -37,6 +37,7 @@ namespace DFramework
                     }
                     else
                     {
+                        DontDestroyOnLoad(mInstance.gameObject);
                         Debug.LogFormat("Already exist:{0}", mInstance.name);
                     }
                 }
