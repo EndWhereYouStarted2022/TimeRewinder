@@ -727,8 +727,12 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8754618857846427516, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
-      propertyPath: m_AnimatedTiles.Array.data[8].second.m_AnimationSpeed
+      propertyPath: m_AnimatedTiles.Array.data[7].second.m_AnimationSpeed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754618857846427516, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[8].second.m_AnimationSpeed
+      value: 5.0000005
       objectReference: {fileID: 0}
     - target: {fileID: 8754618857846427516, guid: c0504b7818c005e4eaa4aa896b20bd75, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[9].second.m_AnimationSpeed
@@ -1218,9 +1222,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btnJump: {fileID: 498011190558417601}
-  timeBar: {fileID: 0}
-  rewindBar: {fileID: 0}
-  txtPast: {fileID: 0}
+  timeBar: {fileID: 498011190704986497}
+  rewindBar: {fileID: 498011191265472373}
+  txtRest: {fileID: 498011190963498431}
 --- !u!1 &498011190704986496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,7 +1434,7 @@ GameObject:
   - component: {fileID: 498011190963498428}
   - component: {fileID: 498011190963498431}
   m_Layer: 5
-  m_Name: pastTime
+  m_Name: restTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2051,6 +2055,7 @@ GameObject:
   - component: {fileID: 498011192390723934}
   - component: {fileID: 498011192390723929}
   - component: {fileID: 498011192390723928}
+  - component: {fileID: 498011192390723932}
   m_Layer: 5
   m_Name: btnRewind
   m_TagString: Untagged
@@ -2078,6 +2083,18 @@ RectTransform:
   m_AnchoredPosition: {x: 800, y: 50}
   m_SizeDelta: {x: 180, y: 80}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &498011192390723932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498011192390723930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 618a92cd1f7f9e4499119c19a8b325ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &498011192390723934
 CanvasRenderer:
   m_ObjectHideFlags: 0

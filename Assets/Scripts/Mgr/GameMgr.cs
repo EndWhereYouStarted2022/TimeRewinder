@@ -186,7 +186,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     public void AddRewindPower(float power)
     {
-        _rewindPower += _rewindPower;
+        _rewindPower += power;
     }
 
     // public void OnGUI()
