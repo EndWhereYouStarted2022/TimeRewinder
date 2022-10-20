@@ -68,7 +68,6 @@ namespace Mgr
         {
             if (!EntityDic.ContainsKey(uid))
             {
-                Debug.LogError($"没有找到{uid}对应的角色");
                 return;
             }
             EntityDic.Remove(uid);

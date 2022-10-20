@@ -91,7 +91,6 @@ namespace Rewind
                 normalizedTime.RemoveAt(0);
             }
             ani.speed = 1f;
-            Debug.LogError(time);
             ani.Play(name, 0, time);
             ani.speed = 0f;
         }
