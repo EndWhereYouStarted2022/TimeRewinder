@@ -373,6 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rewindEffect:
   - {fileID: 2093171126}
+  HaveKey: 0
 --- !u!4 &279520394
 Transform:
   m_ObjectHideFlags: 0
@@ -881,6 +882,14 @@ PrefabInstance:
       propertyPath: m_Tiles.Array.data[21].second.m_TileSpriteIndex
       value: 29
       objectReference: {fileID: 0}
+    - target: {fileID: 7491329939944638126, guid: d8ff017f3c5619d4db661d3c8f032938, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[0].second.m_AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491329939944638126, guid: d8ff017f3c5619d4db661d3c8f032938, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[2].second.m_AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8754618858399828469, guid: d8ff017f3c5619d4db661d3c8f032938, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1125,7 +1134,9 @@ PrefabInstance:
       propertyPath: m_Tiles.Array.data[32].second.m_TileSpriteIndex
       value: 20
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5871029514176459110, guid: d8ff017f3c5619d4db661d3c8f032938, type: 3}
+    - {fileID: 817639929, guid: d8ff017f3c5619d4db661d3c8f032938, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d8ff017f3c5619d4db661d3c8f032938, type: 3}
 --- !u!1001 &2057373123
 PrefabInstance:

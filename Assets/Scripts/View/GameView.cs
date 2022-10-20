@@ -76,7 +76,7 @@ public class GameView : MonoBehaviour
     {
         msgBox.SetActive(false);
         //开始游戏，开始计时
-        
+        GameMgr.Instance.EnterGame();
     }
 
 }

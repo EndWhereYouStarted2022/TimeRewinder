@@ -74,10 +74,9 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// <summary>
     /// 开始游戏的初始化
     /// </summary>
-    private void EnterGame()
+    public void EnterGame()
     {
         _idCounter = 0;
-        IsRunning = false;
         GameStart();
         SetRewindEffectActive(false);
         IsWinning = false;
@@ -86,10 +85,10 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// <summary>
     /// 退出游戏前处理
     /// </summary>
-    private void ExitGame()
+    public void ExitGame()
     {
         _gameTime = 0;
-        IsRunning = true;
+        IsRunning = false;
         IsRewinding = false;
         IsRunning = false;
         RewindMgr.Instance.ReleaseGame();
@@ -151,13 +150,13 @@ public class GameMgr : MonoSingleton<GameMgr>
             ExitGame();
         }
 
-        // if (Input.GetMouseButtonDown(2))
-        // {
-        //     AddRewindPower(200);
-        //     IsRunning = false;
-        //     IsWinning = true;
-        //     RewindMgr.Instance.StartRewind();
-        // }
+        if (Input.GetMouseButtonDown(2))
+        {
+            AddRewindPower(200);
+            // IsRunning = false;
+            // IsWinning = true;
+            // RewindMgr.Instance.StartRewind();
+        }
     }
 
     public void FixedUpdate()
