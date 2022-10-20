@@ -6,11 +6,13 @@ public class GameView : MonoBehaviour
 {
     public Button btnJump;
     public Button btnRewind;
-    public Image remainBar;
-    public Text pastTime;
+    public RectTransform timeBar;//timeBar's width will grow as time goes by 
+    public Image rewindBar;//rewind time
+    public Text txtPast;
 
-    private float totalRewind = 300; //暂定可回溯总时间300s
-    private float remainRewind = 0;  //剩余回溯时间
+    private float widthPerMinute = 100; //1分钟对应的timeBar宽度
+    private float _pastTime = 0;  //已经过时间
+    private float _rewindTime = 0;  //剩余回溯时间
     private float minute = 0;
     private float second = 0;
     private float millisecond = 0;
@@ -37,15 +39,21 @@ public class GameView : MonoBehaviour
         
     }
     /// <summary>
-    /// 传入游戏开始以来的时间
+    /// 传入游戏开始至今经过的时间
     /// </summary>
-    /// <param name="time"></param>
+    /// <param name="time">单位为秒的时间</param>
     private void UpdateTime(float time)
     {
+        //update time
+        _pastTime = time;
         minute = (int) (time / 60);
         second = (int) (time - minute*60);
         millisecond = (int) ((time - (int) time) * 1000);
-        pastTime.text = String.Format("{0:D2}:{1:D2}:{2:D2}",minute,second,millisecond);
+        txtPast.text = String.Format("{0:D2}:{1:D2}:{2:D2}",minute,second,millisecond);
+        
+        //update timeBar and rewindBar
+        timeBar.sizeDelta = new Vector2(_pastTime/60*widthPerMinute,50) ;
+        rewindBar.fillAmount = _rewindTime / _pastTime;
     }
     /// <summary>
     /// 设置剩余的可回溯时间
@@ -54,7 +62,6 @@ public class GameView : MonoBehaviour
     private void SetRemainRewind(float restTime)
     {
         if (restTime < 0) return;
-        this.remainRewind = restTime;
-        remainBar.fillAmount = remainRewind / totalRewind;
+        _rewindTime = restTime;
     }
 }
