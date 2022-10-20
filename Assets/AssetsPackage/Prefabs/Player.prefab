@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6759382383372159932}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5523183747042997606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalPosition: {x: 0, y: -0.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7116868106888255144}
@@ -45,7 +45,8 @@ GameObject:
   - component: {fileID: 7116868106888255150}
   - component: {fileID: 4013841604973945383}
   - component: {fileID: 4111230397814070408}
-  m_Layer: 0
+  - component: {fileID: 2126462537}
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -79,13 +80,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a63b1c84be41e084090c8f6103a468a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jumpForce: 400
+  _jumpForce: 530
   _movementSmoothing: 0.05
-  _airControl: 0
+  _airControl: 1
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 0
-  _groundCheck: {fileID: 0}
+    m_Bits: 128
+  _groundCheck: {fileID: 6759382383372159932}
+  _ladderLayer:
+    serializedVersion: 2
+    m_Bits: 64
   _anim: {fileID: 0}
   OnLandEvent:
     m_PersistentCalls:
@@ -103,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Center: {fileID: 6759382383372159932}
+  radius: 0.2
 --- !u!212 &7116868106888255145
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -142,7 +147,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_Sprite: {fileID: -8019239915147560276, guid: ba4ff3afc4a53484391ea94da4c02d68, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -188,7 +193,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -210,3 +215,48 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.59375, y: 1.09375}
   m_Direction: 0
+--- !u!114 &2126462537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7116868106888255147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef7da5038594447a89468482848ca5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody: {fileID: 4013841604973945383}
+  collider: {fileID: 4111230397814070408}
+  animator: {fileID: 7116868106888255150}
+  onRewindStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7749188325208291462}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnRewindStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onRewindEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7749188325208291462}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnRewindStop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

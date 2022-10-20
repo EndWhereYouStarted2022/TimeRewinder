@@ -1,5 +1,3 @@
-using Mgr;
-using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,8 +23,7 @@ public class PlayerController : MonoBehaviour
 	private bool _jump;
 	private bool _isClimbing;
 	private bool _isOnLadder;
-	private float _ladderX; //Snap player into ladder's x position
-	
+
 	[Header("Events")]
 	[Space]
 
@@ -37,8 +34,7 @@ public class PlayerController : MonoBehaviour
 	private static readonly int Jump = Animator.StringToHash("Jump");
 	private static readonly int IsClimbing = Animator.StringToHash("isClimbing");
 	private static readonly int IsRewinding = Animator.StringToHash("isRewinding");
-
-
+	
 	protected void Awake()
 	{
 		_rb = GetComponent<Rigidbody2D>();
@@ -56,7 +52,7 @@ public class PlayerController : MonoBehaviour
 		_jump = Input.GetAxisRaw("Jump") > 0;
 		//play running animation 
 		_anim.SetBool(IsRunning,Mathf.Abs(_movement.x) > 0);
-		_anim.SetBool(IsClimbing,_isOnLadder && Mathf.Abs(_movement.y) > 0);
+		_anim.SetBool(IsClimbing, _isClimbing);
 	}
 
 	protected void FixedUpdate()
@@ -111,16 +107,24 @@ public class PlayerController : MonoBehaviour
 			_jump = true;
 		}
 	}
-	public void Move(Vector2 move, bool jump)
+
+	private void Move(Vector2 move, bool jump)
 	{
-		if (_isOnLadder && Mathf.Abs(_movement.y) > 0)
+		//On a ladder, not yet climbing but has Y input, Start to climb
+		if (_isOnLadder && Mathf.Abs(_movement.y) > 0 && (!_isClimbing))
 		{
-			if (!_isClimbing)
-				OnStartClimb();
 			_isClimbing = true;
-			
+			OnStartClimb();
+		}
+
+		//When climbing, fetch Y input into action
+		if (_isClimbing)
+		{
 			ClimbMove(move.y);
-			return;
+
+			//if not grounded, skip reading x input; else still read x
+			if (!_grounded)
+				return;
 		}
 		
 		if (_grounded || _airControl)
@@ -171,13 +175,15 @@ public class PlayerController : MonoBehaviour
 	void OnStartClimb()
 	{
 		_movement = Vector2.zero;
-		_collider.enabled = false;
+		_rb.gravityScale = 0;
+		ToggleFloorCollision(true);
 	}
 
 	void OnEndClimb()
 	{
 		_isClimbing = false;
-		_collider.enabled = true;
+		_rb.gravityScale = Config.GameConfig.GravityScale;
+		ToggleFloorCollision(false);
 	}
 	
 	public void OnRewindStart()
@@ -190,5 +196,20 @@ public class PlayerController : MonoBehaviour
 	public void OnRewindStop()
 	{
 		_anim.SetBool(IsRewinding,false);
+		Reset();
+	}
+
+	void Reset()
+	{
+		//Reset player scale
+		_facingRight = true;
+		Vector3 theScale = transform.localScale;
+		theScale.x = 1;
+		transform.localScale = theScale;
+	}
+
+	void ToggleFloorCollision(bool flag)
+	{
+		Physics2D.IgnoreLayerCollision(3, 9, flag);
 	}
 }
