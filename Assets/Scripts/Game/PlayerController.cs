@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
+		if (GameMgr.Instance.IsRunning) return;
 		if(GameMgr.Instance.IsRewinding) return;
 		_movement.x = Input.GetAxisRaw("Horizontal");
 		_movement.y = Input.GetAxisRaw("Vertical");
@@ -186,7 +187,6 @@ public class PlayerController : MonoBehaviour
 
 	void OnEndClimb()
 	{
-		Debug.Log("On End Climb");
 		_isClimbing = false;
 		_rb.gravityScale = Config.GameConfig.GravityScale;
 		ToggleFloorCollision(false);
