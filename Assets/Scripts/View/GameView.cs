@@ -1,13 +1,14 @@
 using System;
 using Config;
+using Mgr;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class GameView : MonoBehaviour
 {
     private PlayerController _playerController;
-    
-    public Button btnJump;
+    public GameObject btnRewind;
     public RectTransform timeBar;//timeBar's width will grow as time goes by 
     public Image rewindBar;//rewind time
     public Text txtRest;
@@ -22,7 +23,8 @@ public class GameView : MonoBehaviour
     void Start()
     {
         _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        btnJump.onClick.AddListener(OnJump);
+        btnRewind.GetComponent<ButtonListener>().OnDown.AddListener(()=>{ RewindMgr.Instance.StartRewind(); });
+        btnRewind.GetComponent<ButtonListener>().OnUp.AddListener(()=>{ RewindMgr.Instance.StopRewind(); });
     }
 
     // Update is called once per frame
@@ -35,7 +37,7 @@ public class GameView : MonoBehaviour
         }
     }
 
-    private void OnJump()
+    public void OnJump()
     {
         _playerController?.ClickJump();
     }
