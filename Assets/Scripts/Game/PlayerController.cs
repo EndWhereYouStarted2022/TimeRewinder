@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 	private Collider2D[] _cacheColliders; // Cache Collider2D array used in Fixed Update to check for ground collision
 	private Vector2 _movement = Vector2.zero;
 	private bool _jump;
+	private bool _clickBtnJump;
 	private bool _isClimbing;
 	private bool _isOnLadder;
 
@@ -50,7 +51,7 @@ public class PlayerController : MonoBehaviour
 		if(GameMgr.Instance.IsRewinding) return;
 		_movement.x = Input.GetAxisRaw("Horizontal");
 		_movement.y = Input.GetAxisRaw("Vertical");
-		_jump = Input.GetAxisRaw("Jump") > 0;
+		_jump = Input.GetAxisRaw("Jump") > 0 || _clickBtnJump;
 		//play running animation 
 		_anim.SetBool(IsRunning,Mathf.Abs(_movement.x) > 0);
 	}
@@ -102,9 +103,9 @@ public class PlayerController : MonoBehaviour
 
 	public void ClickJump()
 	{
-		if (!_jump)
+		if (!_clickBtnJump)
 		{
-			_jump = true;
+			_clickBtnJump = true;
 		}
 	}
 
@@ -139,6 +140,7 @@ public class PlayerController : MonoBehaviour
 			_grounded = false;
 			_rb.AddForce(new Vector2(0f, _jumpForce));
 			_anim.SetTrigger(Jump);
+			_clickBtnJump = false;
 		}
 	}
 

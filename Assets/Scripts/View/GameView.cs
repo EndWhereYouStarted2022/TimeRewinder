@@ -1,17 +1,20 @@
 using System;
+using Config;
+using Mgr;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class GameView : MonoBehaviour
 {
     private PlayerController _playerController;
-    
-    public Button btnJump;
+    public GameObject btnRewind;
     public RectTransform timeBar;//timeBar's width will grow as time goes by 
     public Image rewindBar;//rewind time
-    public Text txtPast;
+    public Text txtRest;
     
-    private float widthPerMinute = 100; //1分钟对应的timeBar宽度
+    private float widthPerMinute = 1000/(GameConfig.TotalGameTime/60); //1分钟对应的timeBar宽度
+    private float _restTime = GameConfig.TotalGameTime;
     private float _pastTime = 0;  //已经过时间
     private float _rewindTime = 0;  //剩余回溯时间
     private float minute = 0;
@@ -20,44 +23,39 @@ public class GameView : MonoBehaviour
     void Start()
     {
         _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        btnJump.onClick.AddListener(OnJump);
+        btnRewind.GetComponent<ButtonListener>().OnDown.AddListener(()=>{ RewindMgr.Instance.StartRewind(); });
+        btnRewind.GetComponent<ButtonListener>().OnUp.AddListener(()=>{ RewindMgr.Instance.StopRewind(); });
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateTime();
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GameMgr.Instance.AddRewindPower(5);
+        }
     }
 
-    private void OnJump()
+    public void OnJump()
     {
         _playerController?.ClickJump();
     }
     
-    /// <summary>
-    /// 传入游戏开始至今经过的时间
-    /// </summary>
-    /// <param name="time">单位为秒的时间</param>
-    private void UpdateTime(float time)
+    //更新时间显示
+    private void UpdateTime()
     {
         //update time
-        _pastTime = time;
-        minute = (int) (time / 60);
-        second = (int) (time - minute*60);
-        millisecond = (int) ((time - (int) time) * 1000);
-        txtPast.text = String.Format("{0:D2}:{1:D2}:{2:D2}",minute,second,millisecond);
+        _pastTime = GameMgr.Instance.TimeGone / 1000;
+        _restTime = GameMgr.Instance.RemainTime / 1000;
+        _rewindTime = GameMgr.Instance.Power / 1000;
+        minute = (int) (_restTime / 60);
+        second = (int) (_restTime - minute*60);
+        millisecond = (int) ((_restTime - (int) _restTime) * 100);
+        txtRest.text = String.Format("{0}:{1}:{2}",minute.ToString("00"),second.ToString("00"),millisecond.ToString("00"));
         
         //update timeBar and rewindBar
         timeBar.sizeDelta = new Vector2(_pastTime/60*widthPerMinute,50) ;
         rewindBar.fillAmount = _rewindTime / _pastTime;
-    }
-    /// <summary>
-    /// 设置剩余的可回溯时间
-    /// </summary>
-    /// <param name="restTime"></param>
-    private void SetRemainRewind(float restTime)
-    {
-        if (restTime < 0) return;
-        _rewindTime = restTime;
     }
 }
