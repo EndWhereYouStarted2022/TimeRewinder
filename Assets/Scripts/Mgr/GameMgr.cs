@@ -86,6 +86,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         _idCounter = 0;
         IsRunning = false;
         GameStart();
+        SetRewindEffectActive(false);
     }
 
     /// <summary>
@@ -95,6 +96,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     {
         IsRunning = false;
         RewindMgr.Instance.ReleaseGame();
+        SetRewindEffectActive(false);
     }
 
     /// <summary>
@@ -136,20 +138,20 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     public void Update()
     {
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     Debug.LogError("开始回放");
-        //     RewindMgr.Instance.StartRewind();
-        // }
-        // if (Input.GetMouseButtonUp(0))
-        // {
-        //     Debug.LogError("结束回放");
-        //     RewindMgr.Instance.StopRewind();
-        // }
-        // if (Input.GetMouseButtonDown(1))
-        // {
-        //     _rewindPower += 5;
-        // }
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.LogError("开始回放");
+            RewindMgr.Instance.StartRewind();
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            Debug.LogError("结束回放");
+            RewindMgr.Instance.StopRewind();
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            _rewindPower += 5;
+        }
     }
 
     public void FixedUpdate()
@@ -178,10 +180,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     public void SetRewindState(bool rewinding)
     {
         IsRewinding = rewinding;
-        foreach (var obj in rewindEffect)
-        {
-            obj.SetActive(rewinding);
-        }
+        SetRewindEffectActive(rewinding);
     }
 
     public void AddRewindPower(float power)
@@ -189,11 +188,12 @@ public class GameMgr : MonoSingleton<GameMgr>
         _rewindPower += power;
     }
 
-    // public void OnGUI()
-    // {
-    //     GUI.Label(new Rect(10, 10, 100, 20), RemainTime.ToString());
-    //     GUI.Label(new Rect(10, 30, 100, 20), Power.ToString());
-    //     GUI.Label(new Rect(10, 50, 100, 20), TimeGone.ToString());
-    // }
+    private void SetRewindEffectActive(bool show)
+    {
+        foreach (var obj in rewindEffect)
+        {
+            obj.SetActive(show);
+        }
+    }
 
 }
