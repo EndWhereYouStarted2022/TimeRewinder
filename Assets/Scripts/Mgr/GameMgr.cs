@@ -133,20 +133,20 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.LogError("开始回放");
-            RewindMgr.Instance.StartRewind();
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            Debug.LogError("结束回放");
-            RewindMgr.Instance.StopRewind();
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            _rewindPower += 5;
-        }
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     Debug.LogError("开始回放");
+        //     RewindMgr.Instance.StartRewind();
+        // }
+        // if (Input.GetMouseButtonUp(0))
+        // {
+        //     Debug.LogError("结束回放");
+        //     RewindMgr.Instance.StopRewind();
+        // }
+        // if (Input.GetMouseButtonDown(1))
+        // {
+        //     _rewindPower += 5;
+        // }
     }
 
     public void FixedUpdate()
@@ -175,6 +175,11 @@ public class GameMgr : MonoSingleton<GameMgr>
     public void SetRewindState(bool rewinding)
     {
         IsRewinding = rewinding;
+    }
+
+    public void AddRewindPower(float power)
+    {
+        _rewindPower += _rewindPower;
     }
 
     public void OnGUI()
