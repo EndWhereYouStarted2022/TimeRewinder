@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
 	private static readonly int IsRunning = Animator.StringToHash("isRunning");
 	private static readonly int Jump = Animator.StringToHash("Jump");
 	private static readonly int IsClimbing = Animator.StringToHash("isClimbing");
+	private static readonly int IsRewinding = Animator.StringToHash("isRewinding");
 
 
 	protected void Awake()
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
 		_collider = GetComponent<Collider2D>();
 		_anim = GetComponent<Animator>();
 		_cacheColliders = new Collider2D[6];
+		_anim.SetBool(IsRewinding,false);
 	}
 
 	private void Update()
@@ -182,6 +184,11 @@ public class PlayerController : MonoBehaviour
 	{
 		_movement = Vector2.zero;
 		_anim.SetBool(IsRunning,true);
-		_anim.Play("Player_Run");
+		// _anim.Play("Player_Run");
+		_anim.SetBool(IsRewinding,true);
+	}
+	public void OnRewindStop()
+	{
+		_anim.SetBool(IsRewinding,false);
 	}
 }

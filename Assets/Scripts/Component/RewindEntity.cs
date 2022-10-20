@@ -10,7 +10,7 @@ namespace Rewind
     public class RewindEntity : MonoBehaviour
     {
         public int Uid { private set; get; }
-        
+
         public RewindData data = new RewindData();
         public Rigidbody2D rigidbody;
         public Collider2D collider;
@@ -24,7 +24,7 @@ namespace Rewind
         private void Start()
         {
             Uid = GameMgr.Instance.GetGameOnlyId();
-            RewindMgr.Instance.AddEntity(Uid,this);
+            RewindMgr.Instance.AddEntity(Uid, this);
             RewindMgr.Instance.OnRewindStart += OnRewindStart;
             RewindMgr.Instance.OnRewindStop += OnRewindEnd;
             rigidbody ??= GetComponentInChildren<Rigidbody2D>();
@@ -51,7 +51,7 @@ namespace Rewind
 
         public void Rewinding()
         {
-            data.Set(transform);
+            data.Set(transform, animator);
         }
 
         private void OnRewindStart()
@@ -59,7 +59,7 @@ namespace Rewind
             onRewindStart?.Invoke();
             if (animator)
             {
-                // animator.speed = 0;
+                animator.speed = 0;
             }
             if (collider)
             {
@@ -76,7 +76,7 @@ namespace Rewind
             onRewindEnd?.Invoke();
             if (animator)
             {
-                // animator.speed = 1;
+                animator.speed = 1;
             }
             if (collider)
             {

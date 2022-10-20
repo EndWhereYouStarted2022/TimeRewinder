@@ -23,8 +23,6 @@ public class GameMgr : MonoSingleton<GameMgr>
     public bool IsRunning { private set; get; }
     [HideInInspector]
     public bool IsRewinding { private set; get; }
-    
-    public Texture rewindTexture;
 
     /// <summary>
     /// 游戏剩余时间（ms)
