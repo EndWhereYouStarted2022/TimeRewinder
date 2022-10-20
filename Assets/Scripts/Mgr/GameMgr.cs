@@ -114,6 +114,13 @@ public class GameMgr : MonoSingleton<GameMgr>
         _gameTime = 0;
         IsRunning = true;
         IsRewinding = false;
+        rewindEffect.Clear();
+        var allEffect = GameObject.FindGameObjectsWithTag("RewindEffect");
+        foreach (var obj in allEffect)
+        {
+            rewindEffect.Add(obj);
+        }
+        SetRewindEffectActive(false);
     }
 
     public void GameOver()
