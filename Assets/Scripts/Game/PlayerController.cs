@@ -101,7 +101,14 @@ public class PlayerController : MonoBehaviour
 			OnEndClimb();
 		}
 	}
-	
+
+	public void ClickJump()
+	{
+		if (!_jump)
+		{
+			_jump = true;
+		}
+	}
 	public void Move(Vector2 move, bool jump)
 	{
 		if (_isOnLadder && Mathf.Abs(_movement.y) > 0)

@@ -4,12 +4,13 @@ using UnityEngine.UI;
 
 public class GameView : MonoBehaviour
 {
+    private PlayerController _playerController;
+    
     public Button btnJump;
-    public Button btnRewind;
     public RectTransform timeBar;//timeBar's width will grow as time goes by 
     public Image rewindBar;//rewind time
     public Text txtPast;
-
+    
     private float widthPerMinute = 100; //1分钟对应的timeBar宽度
     private float _pastTime = 0;  //已经过时间
     private float _rewindTime = 0;  //剩余回溯时间
@@ -18,9 +19,8 @@ public class GameView : MonoBehaviour
     private float millisecond = 0;
     void Start()
     {
+        _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         btnJump.onClick.AddListener(OnJump);
-        btnRewind.onClick.AddListener(OnRewind);
-        
     }
 
     // Update is called once per frame
@@ -31,13 +31,9 @@ public class GameView : MonoBehaviour
 
     private void OnJump()
     {
-        
+        _playerController?.ClickJump();
     }
     
-    private void OnRewind()
-    {
-        
-    }
     /// <summary>
     /// 传入游戏开始至今经过的时间
     /// </summary>

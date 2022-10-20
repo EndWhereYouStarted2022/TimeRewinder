@@ -1224,9 +1224,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnJump: {fileID: 498011190558417601}
   btnRewind: {fileID: 498011192390723928}
-  timeBar: {fileID: 0}
-  rewindBar: {fileID: 0}
-  txtPast: {fileID: 0}
+  timeBar: {fileID: 498011190704986497}
+  rewindBar: {fileID: 498011191265472373}
+  txtPast: {fileID: 498011190963498431}
 --- !u!1 &498011190704986496
 GameObject:
   m_ObjectHideFlags: 0
