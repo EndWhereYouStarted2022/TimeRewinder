@@ -132,6 +132,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         IsRunning = false;
         IsRewinding = false;
         isGameOver = true;
+        GameObject.Find("Canvas").transform.Find("GameOverBox").Show();
     }
 
     public void GameFinish()
