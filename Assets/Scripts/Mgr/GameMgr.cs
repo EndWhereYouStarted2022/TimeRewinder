@@ -170,8 +170,12 @@ public class GameMgr : MonoSingleton<GameMgr>
         var dt = Time.fixedDeltaTime;
         if (IsRewinding)
         {
-            _gameTime = Mathf.Max(0, _gameTime - dt);
-            _rewindPower = Mathf.Max(0, _rewindPower - dt);
+            int times = IsWinning ? GameConfig.FinishRewindTimes : 1;
+            for (int i = 0; i < times; i++)
+            {
+                _gameTime = Mathf.Max(0, _gameTime - dt);
+                _rewindPower = Mathf.Max(0, _rewindPower - dt);
+            }
             if (_gameTime == 0 || _rewindPower == 0)
             {
                 RewindMgr.Instance.StopRewind();
