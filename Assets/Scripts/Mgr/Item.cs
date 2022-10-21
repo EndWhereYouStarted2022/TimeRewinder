@@ -9,7 +9,7 @@ public class Item : MonoBehaviour
     /// <summary>
     /// 回溯时间
     /// </summary>
-    private float timer = 50;
+    private float timer = 70;
     
     /// <summary>
     /// 回溯时间
