@@ -84,11 +84,8 @@ public class GameMgr : MonoSingleton<GameMgr>
         IsWinning = false;
         isGameOver = false;
     }
-
-    /// <summary>
-    /// 退出游戏前处理
-    /// </summary>
-    public void ExitGame()
+    
+    public void ReloadGame()
     {
         _gameTime = 0;
         IsRunning = false;
@@ -119,11 +116,13 @@ public class GameMgr : MonoSingleton<GameMgr>
         IsRewinding = false;
         IsWinning = false;
         rewindEffect.Clear();
-        var allEffect = GameObject.FindGameObjectsWithTag("RewindEffect");
-        foreach (var obj in allEffect)
-        {
-            rewindEffect.Add(obj);
-        }
+        // var allEffect = GameObject.FindGameObjectsWithTag("RewindEffect");
+        // foreach (var obj in allEffect)
+        // {
+        //     rewindEffect.Add(obj);
+        // }
+        var timeEffect = GameObject.Find("Canvas").transform.Find("GreenTimeEffect");
+        rewindEffect.Add(timeEffect.gameObject);
         SetRewindEffectActive(false);
     }
 
@@ -137,11 +136,14 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     public void GameFinish()
     {
-        Debug.LogError("GameFinish");
         var player = GameObject.FindWithTag("Player");
         player.transform.localScale = new Vector3(-1,1,1);
         player.transform.GetComponent<Animator>().Play("Player_Run");
-        player.transform.DOLocalMove(new Vector3(-8.6f, -3.43f, 0), 3f).OnComplete(ExitGame);
+        player.transform.DOLocalMove(new Vector3(-8.6f, -3.43f, 0), 3f).OnComplete(()=>
+        {
+            RewindMgr.Instance.StopRewind();
+            GameObject.Find("Canvas").transform.Find("WinBox").Show();
+        });
     }
 
     public void Update()
@@ -174,7 +176,6 @@ public class GameMgr : MonoSingleton<GameMgr>
                 RewindMgr.Instance.StopRewind();
                 if (IsWinning)
                 {
-                    Debug.LogError("1111111111");
                     GameFinish();
                     isGameOver = true;
                 }
