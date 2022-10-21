@@ -48,10 +48,6 @@ public class GameView : MonoBehaviour
     void Update()
     {
         UpdateTime();
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            GameMgr.Instance.AddRewindPower(5);
-        }
     }
 
     public void OnJump()
