@@ -9,11 +9,6 @@ public class EntryMgr : MonoSingleton<EntryMgr>
     private Animator entryAni;
     private BoxCollider2D entryBox;
 
-    private void Awake()
-    {
-        throw new NotImplementedException();
-    }
-
     private void Start()
     {
         entryAni = transform.GetComponent<Animator>();
