@@ -141,15 +141,6 @@ public class GameMgr : MonoSingleton<GameMgr>
             RewindMgr.Instance.StartRewind();
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            EnterGame();
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            ExitGame();
-        }
-
         if (Input.GetMouseButtonDown(2))
         {
             AddRewindPower(200);
