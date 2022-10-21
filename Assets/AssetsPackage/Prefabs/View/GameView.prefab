@@ -880,6 +880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btnRewind: {fileID: 5007127813219988549}
+  btnReplay: {fileID: 5359077919917000101}
   timeBar: {fileID: 5007127814752257182}
   rewindBar: {fileID: 5007127814208926314}
   txtRest: {fileID: 5007127813839843488}
@@ -1253,4 +1254,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Replay
+  m_Text: Restart
