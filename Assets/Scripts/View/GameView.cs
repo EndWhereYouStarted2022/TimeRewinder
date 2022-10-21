@@ -11,6 +11,7 @@ public class GameView : MonoBehaviour
     private PlayerController _playerController;
     private GameObject msgBox;
     public GameObject btnRewind;
+    public GameObject btnReplay;
     public RectTransform timeBar;//timeBar's width will grow as time goes by 
     public Image rewindBar;//rewind time
     public Text txtRest;
@@ -35,6 +36,11 @@ public class GameView : MonoBehaviour
                 if(GameMgr.Instance.isGameOver || GameMgr.Instance.IsWinning) return;
                 RewindMgr.Instance.StopRewind();
             });
+        btnReplay.GetComponent<ButtonListener>().OnUp.AddListener(() =>
+        {
+            if(GameMgr.Instance.isGameOver || GameMgr.Instance.IsWinning) return;
+            GameMgr.Instance.ReloadGame();
+        });
         msgBox = transform.parent.Find("MessageBox").gameObject;
         if (!msgBox.activeInHierarchy)
         {
