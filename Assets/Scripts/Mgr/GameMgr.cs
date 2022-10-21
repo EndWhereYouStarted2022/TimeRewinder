@@ -156,11 +156,6 @@ public class GameMgr : MonoSingleton<GameMgr>
             IsWinning = true;
             RewindMgr.Instance.StartRewind();
         }
-        
-        if (Input.GetMouseButtonDown(2))
-        {
-            AddRewindPower(20);
-        }
     }
 
     public void FixedUpdate()
