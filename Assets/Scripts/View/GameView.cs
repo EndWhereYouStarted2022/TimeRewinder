@@ -38,12 +38,8 @@ public class GameView : MonoBehaviour
         msgBox = transform.parent.Find("MessageBox").gameObject;
         if (!msgBox.activeInHierarchy)
         {
-            msgBox.SetActive(true);
             var msg = msgBox.GetComponent<MessageBox>();
-            msg.HideCancelBtn();
             msg.SetText("游戏即将开始，请做好准备...");
-            msg.SetCountDown(3);
-            msg.SetDelegate(OnBtnOk,null);
             msgBox.SetActive(true);
         }
     }
@@ -80,11 +76,4 @@ public class GameView : MonoBehaviour
         rewindBar.fillAmount = _rewindTime / _pastTime;
     }
     
-    private void OnBtnOk()
-    {
-        msgBox.SetActive(false);
-        //开始游戏，开始计时
-        GameMgr.Instance.EnterGame();
-    }
-
 }
