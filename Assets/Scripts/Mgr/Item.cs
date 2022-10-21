@@ -19,7 +19,7 @@ public class Item : MonoBehaviour
         set { timer = value; }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         //判断玩家销毁并增加回溯时间
         if (other.tag == "Player")

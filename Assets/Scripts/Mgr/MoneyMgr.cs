@@ -6,12 +6,13 @@ using UnityEngine;
 
 public class MoneyMgr : MonoSingleton<MoneyMgr>
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
             //开启大门
             EntryMgr.Instance.OpenEntry();
+            Destroy(transform.gameObject);
         }
     }
 }
