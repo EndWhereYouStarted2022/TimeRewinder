@@ -28,8 +28,8 @@ public class GameMgr : MonoSingleton<GameMgr>
     public bool IsRewinding { private set; get; }
 
     public bool HaveKey;
-    private bool IsWinning;
-    private bool isGameOver;
+    public bool IsWinning;
+    public bool isGameOver;
     
 
     /// <summary>
@@ -142,6 +142,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         player.transform.DOLocalMove(new Vector3(-8.6f, -3.43f, 0), 3f).OnComplete(()=>
         {
             RewindMgr.Instance.StopRewind();
+            player.GetComponent<Collider2D>().enabled = false;
             GameObject.Find("Canvas").transform.Find("WinBox").Show();
         });
     }

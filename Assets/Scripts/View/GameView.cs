@@ -25,8 +25,16 @@ public class GameView : MonoBehaviour
     void Start()
     {
         _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        btnRewind.GetComponent<ButtonListener>().OnDown.AddListener(()=>{ RewindMgr.Instance.StartRewind(); });
-        btnRewind.GetComponent<ButtonListener>().OnUp.AddListener(()=>{ RewindMgr.Instance.StopRewind(); });
+        btnRewind.GetComponent<ButtonListener>().OnDown.AddListener(() =>
+        {
+            if(GameMgr.Instance.isGameOver || GameMgr.Instance.IsWinning) return;
+            RewindMgr.Instance.StartRewind();
+        });
+        btnRewind.GetComponent<ButtonListener>().OnUp.AddListener(() =>
+            {
+                if(GameMgr.Instance.isGameOver || GameMgr.Instance.IsWinning) return;
+                RewindMgr.Instance.StopRewind();
+            });
         msgBox = transform.parent.Find("MessageBox").gameObject;
         if (!msgBox.activeInHierarchy)
         {
