@@ -8,5 +8,7 @@
         public static readonly float TotalGameTime = 180f;
 
         public const float GravityScale = 3f;
+
+        public const int FinishRewindTimes = 2;
     }
 }

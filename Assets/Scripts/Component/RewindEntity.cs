@@ -51,7 +51,12 @@ namespace Rewind
 
         public void Rewinding()
         {
-            data.Set(transform, animator);
+            int times = GameMgr.Instance.IsWinning ? GameConfig.FinishRewindTimes: 1;
+            for (int i = 0; i < times; i++)
+            {
+            
+                data.Set(transform, animator);
+            }
         }
 
         private void OnRewindStart()

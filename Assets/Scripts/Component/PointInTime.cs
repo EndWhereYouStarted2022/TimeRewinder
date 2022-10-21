@@ -114,7 +114,7 @@ namespace Rewind
             }
         }
 
-        public void Set(Transform tsf, Animator ani = null, int times = 1)
+        public void Set(Transform tsf, Animator ani = null)
         {
             tsf.position = position.Get();
             tsf.rotation = rotation.Get();
