@@ -32,16 +32,4 @@ public class EntryMgr : MonoSingleton<EntryMgr>
         entryAni.SetInteger("State",1);
         entryBox.isTrigger = false;
     }
-    /// <summary>
-    /// 打开门的时候游戏结束
-    /// </summary>
-    /// <param name="other"></param>
-    // private void OnTriggerEnter2D(Collider2D other)
-    // {
-    //     if (other.tag == "Player")
-    //     {
-    //         //Game Over
-    //         Debug.LogError("GameOver");
-    //     }
-    // }
 }

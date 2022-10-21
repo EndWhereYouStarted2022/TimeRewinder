@@ -1,5 +1,6 @@
 using Config;
 using DFramework;
+using DG.Tweening;
 using Mgr;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     public bool HaveKey;
     private bool IsWinning;
+    private bool isGameOver;
     
 
     /// <summary>
@@ -80,6 +82,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         GameStart();
         SetRewindEffectActive(false);
         IsWinning = false;
+        isGameOver = false;
     }
 
     /// <summary>
@@ -90,9 +93,12 @@ public class GameMgr : MonoSingleton<GameMgr>
         _gameTime = 0;
         IsRunning = false;
         IsRewinding = false;
-        IsRunning = false;
+        IsWinning = false;
+        isGameOver = true;
+        HaveKey = false;
         RewindMgr.Instance.ReleaseGame();
         SceneManager.LoadScene("Map");
+        Destroy(EntryMgr.Instance.gameObject);
     }
 
     /// <summary>
@@ -107,6 +113,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     public void GameStart()
     {
+        _rewindPower = 0;
         _gameTime = 0;
         IsRunning = true;
         IsRewinding = false;
@@ -125,42 +132,37 @@ public class GameMgr : MonoSingleton<GameMgr>
         Debug.LogError("游戏结束了");
         IsRunning = false;
         IsRewinding = false;
+        isGameOver = true;
     }
 
     public void GameFinish()
     {
-        GameObject.Find("Canvas").transform.Find("MessageBox").Show();
+        Debug.LogError("GameFinish");
+        var player = GameObject.FindWithTag("Player");
+        player.transform.localScale = new Vector3(-1,1,1);
+        player.transform.GetComponent<Animator>().Play("Player_Run");
+        player.transform.DOLocalMove(new Vector3(-8.6f, -3.43f, 0), 3f).OnComplete(ExitGame);
     }
 
     public void Update()
     {
-        if (HaveKey && _rewindPower > _gameTime && IsWinning)
+        if (isGameOver) return;
+        if (HaveKey && _rewindPower > _gameTime && !IsWinning)
         {
             IsRunning = false;
             IsWinning = true;
             RewindMgr.Instance.StartRewind();
         }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            EnterGame();
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            ExitGame();
-        }
-
+        
         if (Input.GetMouseButtonDown(2))
         {
-            AddRewindPower(200);
-            // IsRunning = false;
-            // IsWinning = true;
-            // RewindMgr.Instance.StartRewind();
+            AddRewindPower(20);
         }
     }
 
     public void FixedUpdate()
     {
+        if (isGameOver) return;
         if (!IsRunning && !IsWinning) return;
         var dt = Time.fixedDeltaTime;
         if (IsRewinding)
@@ -172,7 +174,9 @@ public class GameMgr : MonoSingleton<GameMgr>
                 RewindMgr.Instance.StopRewind();
                 if (IsWinning)
                 {
+                    Debug.LogError("1111111111");
                     GameFinish();
+                    isGameOver = true;
                 }
             }
         }

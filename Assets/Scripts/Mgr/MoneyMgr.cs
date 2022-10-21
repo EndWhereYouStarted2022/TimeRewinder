@@ -12,6 +12,7 @@ public class MoneyMgr : MonoSingleton<MoneyMgr>
         {
             //开启大门
             EntryMgr.Instance.OpenEntry();
+            GameMgr.Instance.HaveKey = true;
             Destroy(transform.gameObject);
         }
     }
